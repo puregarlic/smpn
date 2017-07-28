@@ -1,6 +1,6 @@
 {
   "name": "smpn",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Better NPM CLI search",
   "main": "index.js",
   "scripts": {
