@@ -8,6 +8,10 @@ const inquirer = require('inquirer')
 program.version('1.0.0').usage('[options] <search terms>').parse(process.argv)
 
 const plusify = (strings, args) => {
+  if (!args[0]) {
+    console.error('You need to pass search terms!')
+    process.exit()
+}
   return args[0].replace(/ /, '+')
 }
 
