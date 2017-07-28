@@ -1,0 +1,35 @@
+{
+  "name": "smpn",
+  "version": "1.0.0",
+  "description": "Better NPM CLI search",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc ava",
+    "lint": "prettier-standard ./**.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monochromicon/smpn.git"
+  },
+  "keywords": [
+    "search",
+    "npm"
+  ],
+  "author": "Graham Barber <grahammbarber@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/monochromicon/smpn/issues"
+  },
+  "homepage": "https://github.com/monochromicon/smpn#readme",
+  "devDependencies": {
+    "ava": "^0.21.0",
+    "nyc": "^11.0.3",
+    "prettier-standard": "^6.0.0"
+  },
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "commander": "^2.11.0",
+    "got": "^7.1.0",
+    "inquirer": "^3.2.1"
+  }
+}
