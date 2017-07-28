@@ -1,6 +1,7 @@
 #!/usr/local/bin/node
 
 const got = require('got')
+const open = require('open')
 const program = require('commander')
 const inquirer = require('inquirer')
 
@@ -19,9 +20,15 @@ const search = terms => {
 
       inquirer.prompt({
         type: 'list',
-        name: 'Results',
+        name: 'lib',
         message: 'Here is what we found:',
         choices
+      }).then(answer => {
+        got('https://api.npms.io/v2/package/' + plusify`${answer.lib}`)
+          .then(desc => {
+            const results = JSON.parse(desc.body)
+            open(results.collected.metadata.links.npm)
+          })
       })
     })
     .catch(e => console.log(e))
