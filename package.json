@@ -1,11 +1,14 @@
 {
   "name": "smpn",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Better NPM CLI search",
   "main": "index.js",
   "scripts": {
     "test": "nyc ava",
     "lint": "prettier-standard ./**.js"
+  },
+  "bin": {
+    "smpn": "./index.js"
   },
   "repository": {
     "type": "git",
