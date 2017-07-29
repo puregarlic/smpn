@@ -4,9 +4,16 @@
 
 I love searching for modules, but there's no great way to search for them from
 the CLI. The current search mechanism using `npm` is, quite honestly, pretty
-terrible. And, over on the web side of things, we have the fantastic `npms`. So,
-I wanted to build `smpn` as a CLI interface for `npms`. I'm sure you can see the
-namesake.
+terrible. Although `npms` [has a cli](https://www.npmjs.com/package/npms-cli), I
+wanted something a bit more compact, but with the same insights and information.
+I decided to use their API, so I'm sure you can figure out where the name came
+from.
+
+## Features
+
++ Search using [`npms`](https://npms.io)
+  + See most of the same stats
++ Open NPM package entries in your browser
 
 ## Install
 
