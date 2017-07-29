@@ -19,7 +19,12 @@ const search = terms => {
   got(validate`https://api.npms.io/v2/search?q=${terms}`)
     .then(res => {
       const results = JSON.parse(res.body)
-      let choices = results.results.map(n => n.package.name)
+      const choices = results.results.map(n => ({
+        name: n.package.name,
+        value: {
+          url: n.package.links.npm
+        }
+      }))
 
       inquirer
         .prompt({
@@ -29,12 +34,7 @@ const search = terms => {
           choices: [ new inquirer.Separator(), ...choices ]
         })
         .then(answer => {
-          got(
-            validate`https://api.npms.io/v2/package/${answer.lib}`
-          ).then(desc => {
-            const results = JSON.parse(desc.body)
-            open(results.collected.metadata.links.npm)
-          })
+          open(answer.lib.url)
         })
     })
     .catch(e => console.log(e))
