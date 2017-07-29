@@ -41,9 +41,9 @@ const stat = s => {
   return f.length < 3 ? f.padStart(3) : f
 }
 
-// const padFront = (s, n) => {
-//   return s.length < n ? s.padStart(n) : s
-// }
+const padFront = (s, n) => {
+  return s.length < n ? s.padStart(n) : s
+}
 
 const padBack = (s, n) => {
   return s.length < n ? s.padEnd(n) : s
