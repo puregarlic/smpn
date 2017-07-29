@@ -36,29 +36,40 @@ const longest = a => {
   return a[l].length
 }
 
+const stat = s => {
+  const f = Math.floor(s * 100).toString() + '%'
+  return f.length < 3 ? f.padStart(3) : f
+}
+
+// const padFront = (s, n) => {
+//   return s.length < n ? s.padStart(n) : s
+// }
+
+const padBack = (s, n) => {
+  return s.length < n ? s.padEnd(n) : s
+}
+
 const search = terms => {
   got(validate`https://api.npms.io/v2/search?q=${terms}`)
     .then(res => {
       const results = JSON.parse(res.body)
       if (results.total === 0) return console.error('No results found!')
 
-      const longestString = longest(results.results.map(n => n.package.name))
+      const longestName = longest(results.results.map(n => n.package.name))
+      const longestVersion = longest(
+        results.results.map(n => n.package.version)
+      )
 
       const choices = results.results.map(n => ({
         name: `${chalk.bold(
-          n.package.name.length < longestString
-            ? n.package.name.padEnd(longestString) +
-              chalk.gray.dim('(' + n.package.version + ')')
-            : n.package.name + chalk.gray.dim('(' + n.package.version + ')')
-        )} ${chalk.green.dim(
-          Math.floor(n.score.detail.quality * 100) + '%'
-        )} ${chalk.yellow.dim(
-          Math.floor(n.score.detail.popularity * 100) + '%'
-        )} ${chalk.blue.dim(
-          Math.floor(n.score.detail.maintenance * 100) + '%'
-        )} ${chalk.bgRed(Math.floor(n.score.final * 100) + '%')} ${chalk.dim(
-          n.package.description
-        )}`,
+          padBack(n.package.name, longestName)
+        )} ${chalk.gray.dim(
+          padBack(n.package.version, longestVersion)
+        )} ${chalk.green.dim(stat(n.score.detail.quality))} ${chalk.yellow.dim(
+          stat(n.score.detail.popularity)
+        )} ${chalk.blue.dim(stat(n.score.detail.maintenance))} ${chalk.bgRed(
+          stat(n.score.final)
+        )} ${chalk.dim(n.package.description)}`,
         value: {
           url: n.package.links.npm
         }
