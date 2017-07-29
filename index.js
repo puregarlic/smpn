@@ -4,8 +4,12 @@ const got = require('got')
 const open = require('open')
 const program = require('commander')
 const inquirer = require('inquirer')
+const pkg = require('./package.json')
 
-program.version('1.0.0').usage('[options] <search terms>').parse(process.argv)
+program
+  .version(pkg.version)
+  .usage('[options] <search terms>')
+  .parse(process.argv)
 
 const validate = (strings, terms) => {
   if (!terms[0]) {
@@ -19,6 +23,8 @@ const search = terms => {
   got(validate`https://api.npms.io/v2/search?q=${terms}`)
     .then(res => {
       const results = JSON.parse(res.body)
+      if (results.total === 0) return console.error('No results found!')
+
       const choices = results.results.map(n => ({
         name: n.package.name,
         value: {
@@ -31,7 +37,7 @@ const search = terms => {
           type: 'list',
           name: 'lib',
           message: 'Here is what we found:',
-          choices: [ new inquirer.Separator(), ...choices ]
+          choices: [ ...choices, new inquirer.Separator() ]
         })
         .then(answer => {
           open(answer.lib.url)
