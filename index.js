@@ -9,7 +9,20 @@ const pkg = require('./package.json')
 
 program
   .version(pkg.version)
-  .usage('[options] <search terms>')
+  .usage('[options] [search terms]')
+  .option('-a --author [name]', 'Search for a specific author')
+  .option('-s --scope [scope]', 'Restrict search to a specific scope')
+  .option('-k --keywords [keywords]', 'Filter results to packages with the specific keywords')
+  .option('-d --not-deprecated', 'Restrict to non-deprecated results')
+  .option('-D --deprecated', 'Restrict to deprecated results')
+  .option('-u --stable', 'Restrict to stable results')
+  .option('-U --unstable', 'Restrict to unstable results')
+  .option('-i --secure', 'Restrict to secure results')
+  .option('-b --boost-exact', 'Disable NPMS\' boost exact functionality')
+  .option('-e --score-effect [number]', 'Set the score effect value. Default: 15.3')
+  .option('-q --quality [number]', 'Specify a quality weight. Default: 1.95')
+  .option('-p --popularity [number]', 'Specify a popularity weight. Default: 3.3')
+  .option('-m --maintenance [number]', 'Specify a maintenance weight. Default: 2.05')
   .parse(process.argv)
 
 const validate = (strings, terms) => {
