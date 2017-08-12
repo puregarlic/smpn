@@ -12,7 +12,8 @@ from.
 ## Features
 
 + Search using [`npms`](https://npms.io)
-  + See most of the same stats
+  + See all of the same repo ratings
+  + Use the same filters you probably don't know
 + Open NPM package entries in your browser
 
 ## Install
@@ -21,17 +22,17 @@ Super simple stuff. Take your pick:
 
 Standard global install:
 ```shell
-# Install globally,
+# Install globally, the boring way
 npm i -g smpn
-# or
+# or if you're a cool kitten
 yarn add global smpn
 
-# Then use as you do
-smpn <search>
+# Take a peek at the help docs
+smpn --help
 ```
 
-Or if you don't quite want to install it,
+Or maybe you're hip and you don't install things anymore;
 ```shell
-# Install temporarily and run
-npx smpn <search>
+# Install temporarily and check out the help docs
+npx smpn --help
 ```
