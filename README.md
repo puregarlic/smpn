@@ -14,7 +14,11 @@ from.
 + Search using [`npms`](https://npms.io)
   + See all of the same repo ratings
   + Use the same filters you probably don't know
-+ Open NPM package entries in your browser
++ Do a thing with the selected package
+  + Open in your default browser
+  + Install to the project you're in
+  + Install and save to project dependencies
+  + Install and save to project devDependencies
 
 ## Install
 
