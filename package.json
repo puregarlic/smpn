@@ -16,7 +16,10 @@
   },
   "keywords": [
     "search",
-    "npm"
+    "npm",
+    "npms",
+    "cli",
+    "modules"
   ],
   "author": "Graham Barber <grahammbarber@gmail.com>",
   "license": "MIT",
