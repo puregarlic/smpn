@@ -5,6 +5,7 @@ const open = require('open')
 const chalk = require('chalk')
 const program = require('commander')
 const inquirer = require('inquirer')
+const install = require('npm-install-package')
 const pkg = require('./package.json')
 
 program
@@ -143,6 +144,7 @@ const formatResult = (pkg, scores, longestName, longestVersion) => {
       scores.final
     )} ${chalk.dim(pkg.description)}`,
     value: {
+      name: pkg.name,
       url: pkg.links.npm
     }
   }
@@ -174,7 +176,52 @@ ${chalk.green.dim('<Quality>')} ${chalk.yellow.dim(
           choices: [...choices, new inquirer.Separator()]
         })
         .then(answer => {
-          open(answer.lib.url)
+          let vectors = [
+            'Open in browser',
+            'Install without saving',
+            'Install to dependencies',
+            'Install to devDependencies'
+          ]
+          let choices = vectors.map(v => {
+            return {
+              name: v,
+              value: {
+                name: v,
+                lib: answer.lib
+              }
+            }
+          })
+          inquirer
+            .prompt({
+              type: 'list',
+              name: 'vector',
+              message: 'What do you want to do with this module?',
+              choices: [...choices, new inquirer.Separator()]
+            })
+            .then(ansr => {
+              if (ansr.vector.name === 'Open in browser') {
+                open(ansr.vector.lib.url)
+                return
+              }
+              const installOps = {
+                save: ansr.vector.name === 'Install to dependencies',
+                saveDev: ansr.vector.name === 'Install to devDependencies'
+              }
+              install(ansr.vector.lib.name, installOps, err => {
+                if (err) {
+                  return console.error(
+                    "Something went wrong with the install. I'm afraid you're on your own for this one."
+                  )
+                }
+                console.log(
+                  chalk.cyan.underline(
+                    `Package ${ansr.vector.lib.name} installed successfully!`
+                  )
+                )
+              })
+            })
+
+          // open(answer.lib.url)
         })
     })
     .catch(e => console.log(e))

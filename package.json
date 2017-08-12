@@ -37,6 +37,7 @@
     "commander": "^2.11.0",
     "got": "^7.1.0",
     "inquirer": "^3.2.1",
+    "npm-install-package": "^2.1.0",
     "open": "^0.0.5"
   }
 }
