@@ -145,7 +145,7 @@ const formatResult = (pkg, scores, longestName, longestVersion) => {
     )} ${chalk.dim(pkg.description)}`,
     value: {
       name: pkg.name,
-      url: pkg.links.npm
+      links: pkg.links
     }
   }
 }
@@ -176,13 +176,18 @@ ${chalk.green.dim('<Quality>')} ${chalk.yellow.dim(
           choices: [...choices, new inquirer.Separator()]
         })
         .then(answer => {
-          let vectors = [
-            'Open in browser',
+          const openVectors = [
+            'Open on NPM in browser'
+          ]
+          let installVectors = [
             'Install without saving',
             'Install to dependencies',
             'Install to devDependencies'
           ]
-          let choices = vectors.map(v => {
+          if (answer.lib.links.repository) openVectors.push('Open repository in browser')
+          if (answer.lib.links.homepage) openVectors.push('Open package homepage in browser')
+          openVectors.push('Open in Runkit')
+          let choices = openVectors.concat(installVectors).map(v => {
             return {
               name: v,
               value: {
@@ -199,8 +204,20 @@ ${chalk.green.dim('<Quality>')} ${chalk.yellow.dim(
               choices: [...choices, new inquirer.Separator()]
             })
             .then(ansr => {
-              if (ansr.vector.name === 'Open in browser') {
-                open(ansr.vector.lib.url)
+              if (ansr.vector.name === 'Open on NPM in browser') {
+                open(ansr.vector.lib.links.npm)
+                return
+              }
+              if (ansr.vector.name === 'Open repository in browser') {
+                open(ansr.vector.lib.links.repository)
+                return
+              }
+              if (ansr.vector.name === 'Open package homepage in browser') {
+                open(ansr.vector.lib.links.homepage)
+                return
+              }
+              if (ansr.vector.name === 'Open in Runkit') {
+                open(`https://runkit.com/npm/${ansr.vector.lib.name}`)
                 return
               }
               const installOps = {
