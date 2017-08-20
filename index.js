@@ -40,6 +40,19 @@ program
     '-m --maintenance-weight [number]',
     'Specify a maintenance weight. Default: 2.05'
   )
+  .option('-n --npm', 'Open result in browser on NPM')
+  .option('-r --repo', 'Open repository in browser, if available')
+  .option('-u --runkit', 'Open result with Runkit')
+  .option('-h --home', 'Open the package homepage, if available')
+  .option('-o --no-save', 'Install result to local project without saving')
+  .option(
+    '-s --save',
+    'Install result to local project and save to dependencies'
+  )
+  .option(
+    '-e --save-dev',
+    'Install result to local project and save to devDependencies'
+  )
   .parse(process.argv)
 
 const plusify = terms => {
@@ -84,10 +97,7 @@ const plusify = terms => {
 }
 
 const longest = a => {
-  let c = 0,
-    d = 0,
-    l = 0,
-    i = a.length
+  let c = 0, d = 0, l = 0, i = a.length
   if (i) {
     while (i--) {
       d = a[i].length
@@ -134,15 +144,7 @@ const padBack = (s, n) => {
 
 const formatResult = (pkg, scores, longestName, longestVersion) => {
   return {
-    name: `${name(pkg.name, longestName)} ${version(
-      pkg.version,
-      longestVersion
-    )} ${stat(scores.detail.quality, 'quality')} ${stat(
-      scores.detail.popularity,
-      'popularity'
-    )} ${stat(scores.detail.maintenance, 'maintenance')} ${stat(
-      scores.final
-    )} ${chalk.dim(pkg.description)}`,
+    name: `${name(pkg.name, longestName)} ${version(pkg.version, longestVersion)} ${stat(scores.detail.quality, 'quality')} ${stat(scores.detail.popularity, 'popularity')} ${stat(scores.detail.maintenance, 'maintenance')} ${stat(scores.final)} ${chalk.dim(pkg.description)}`,
     value: {
       name: pkg.name,
       links: pkg.links
@@ -170,22 +172,22 @@ const search = terms => {
           type: 'list',
           name: 'lib',
           message: `Here is what we found:
-${chalk.green.dim('<Quality>')} ${chalk.yellow.dim(
-            '<Popularity>'
-          )} ${chalk.blue.dim('<Maintenance>')} ${chalk.bgRed('<Overall>')}`,
+${chalk.green.dim('<Quality>')} ${chalk.yellow.dim('<Popularity>')} ${chalk.blue.dim('<Maintenance>')} ${chalk.bgRed('<Overall>')}`,
           choices: [...choices, new inquirer.Separator()]
         })
         .then(answer => {
-          const openVectors = [
-            'Open on NPM in browser'
-          ]
+          const openVectors = ['Open on NPM in browser']
           let installVectors = [
             'Install without saving',
             'Install to dependencies',
             'Install to devDependencies'
           ]
-          if (answer.lib.links.repository) openVectors.push('Open repository in browser')
-          if (answer.lib.links.homepage) openVectors.push('Open package homepage in browser')
+          if (answer.lib.links.repository) {
+            openVectors.push('Open repository in browser')
+          }
+          if (answer.lib.links.homepage) {
+            openVectors.push('Open package homepage in browser')
+          }
           openVectors.push('Open in Runkit')
           let choices = openVectors.concat(installVectors).map(v => {
             return {
