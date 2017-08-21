@@ -11,46 +11,46 @@ const pkg = require('./package.json')
 program
   .version(pkg.version)
   .usage('[options] [search terms]')
-  .option('-a --author [name]', 'Search for a specific author')
-  .option('-s --scope [scope]', 'Restrict search to a specific scope')
+  .option('-a, --author [name]', 'Search for a specific author')
+  .option('-s, --scope [scope]', 'Restrict search to a specific scope')
   .option(
-    '-k --keywords [keywords]',
+    '-k, --keywords [keywords]',
     'Filter results to packages with the specific keywords. Comma seperated, no spaces in between!'
   )
-  .option('-d --not-deprecated', 'Restrict to non-deprecated results')
-  .option('-D --deprecated', 'Restrict to deprecated results')
-  .option('-u --not-unstable', 'Restrict to results above v1.0.0')
-  .option('-U --unstable', 'Restrict to results beneath v1.0.0')
-  .option('-i --not-insecure', 'Restrict to secure results')
-  .option('-I --insecure', 'Restrict to insecure/vulnerable results')
-  .option('-b --no-boost-exact', 'Do not boost exact search matches')
+  .option('-d, --not-deprecated', 'Restrict to non-deprecated results')
+  .option('-D, --deprecated', 'Restrict to deprecated results')
+  .option('-u, --not-unstable', 'Restrict to results above v1.0.0')
+  .option('-U, --unstable', 'Restrict to results beneath v1.0.0')
+  .option('-i, --not-insecure', 'Restrict to secure results')
+  .option('-I, --insecure', 'Restrict to insecure/vulnerable results')
+  .option('-b, --no-boost-exact', 'Do not boost exact search matches')
   .option(
-    '-e --score-effect [number]',
+    '-e, --score-effect [number]',
     'Set the score effect value. Default: 15.3'
   )
   .option(
-    '-q --quality-weight [number]',
+    '-q, --quality-weight [number]',
     'Specify a quality weight. Default: 1.95'
   )
   .option(
-    '-p --popularity-weight [number]',
+    '-p, --popularity-weight [number]',
     'Specify a popularity weight. Default: 3.3'
   )
   .option(
-    '-m --maintenance-weight [number]',
+    '-m, --maintenance-weight [number]',
     'Specify a maintenance weight. Default: 2.05'
   )
-  .option('-n --npm', 'Open result in browser on NPM')
-  .option('-r --repo', 'Open repository in browser, if available')
-  .option('-u --runkit', 'Open result with Runkit')
-  .option('-h --home', 'Open the package homepage, if available')
-  .option('-o --no-save', 'Install result to local project without saving')
+  .option('-n, --npm', 'Open result in browser on NPM')
+  .option('-r, --repo', 'Open repository in browser, if available')
+  .option('-u, --runkit', 'Open result with Runkit')
+  .option('-h, --home', 'Open the package homepage, if available')
+  .option('-o, --no-save', 'Install result to local project without saving')
   .option(
-    '-s --save',
+    '-s, --save',
     'Install result to local project and save to dependencies'
   )
   .option(
-    '-e --save-dev',
+    '-e, --save-dev',
     'Install result to local project and save to devDependencies'
   )
   .parse(process.argv)
